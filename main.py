@@ -5,8 +5,9 @@ WIDTH, HEIGHT = 600, 600
 
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 
-
+# Woahhh
 BGCOLOR = (50, 54, 61)
+# dddddddddDDDDDDDDDDDdDDDD
 
 
 def handle_events():
