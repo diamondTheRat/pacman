@@ -1,16 +1,39 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+import pygame
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+WIDTH, HEIGHT = 600, 600
+
+WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+BGCOLOR = (50, 54, 61)
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
+def handle_events():
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            quit()
+
+
+def draw():
+    WIN.fill(BGCOLOR)
+
+
+    pygame.display.update()
+
+
+def main():
+
+
+    clock = pygame.time.Clock()
+    while True:
+        clock.tick(60)
+
+        handle_events()
+
+
+        draw()
+
+
+if __name__ == "__main__":
+    main()
