@@ -3,10 +3,14 @@
   <component name="ProjectModuleManager">
     <modules>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/.idea/GitTesting.iml" filepath="$PROJECT_DIR$/.idea/GitTesting.iml" />
 =======
       <module fileurl="file://$PROJECT_DIR$/.idea/pacman.iml" filepath="$PROJECT_DIR$/.idea/pacman.iml" />
 >>>>>>> 350d0111216873bf3b464b9348d2cff400052ee9
+=======
+      <module fileurl="file://$PROJECT_DIR$/.idea/pacman.iml" filepath="$PROJECT_DIR$/.idea/pacman.iml" />
+>>>>>>> 0454659ebe433ffe65545ecc6ca1e50765df93b8
     </modules>
   </component>
 </project>
