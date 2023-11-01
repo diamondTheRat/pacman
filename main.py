@@ -16,8 +16,8 @@ def handle_events():
         if event.type == pygame.QUIT:
             quit()
 
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if pygame.mouse.get_pressed()[0]:
+        if event.type == pygame.MOUSEBUTTONUP:
+            if event.button == 1:
                 game.check_clicks()
 
 
@@ -35,6 +35,8 @@ def main():
         clock.tick(60)
 
         handle_events()
+
+        game.handle_input()
 
         draw()
 

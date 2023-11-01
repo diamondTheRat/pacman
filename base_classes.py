@@ -104,8 +104,8 @@ class Menu:
             Checks if any interaction has occurred.
             :return: None
         """
+        pos = pygame.mouse.get_pos()
         for button in self.buttons:
-            pos = pygame.mouse.get_pos()
             button.click(pos)
 
     def change_state(self, state):

@@ -43,7 +43,7 @@ class PlayButton(Button):
         super().__init__(parent, xy, size, text, text_size, text_color) # initializes the button class(gets the attributes it has)
 
     def action(self):
-        self.parent.change_state("game")
+        self.parent.change_state("playing")
 
 
 class MainMenu(Menu):
