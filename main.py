@@ -3,7 +3,7 @@ from game import Game
 
 WIDTH, HEIGHT = 600, 600
 
-WIN = pygame.display.set_mode((WIDTH, HEIGHT))
+WIN = pygame.display.set_mode((WIDTH, HEIGHT), flags=pygame.RESIZABLE)
 
 game = Game(WIN)
 
@@ -18,7 +18,7 @@ def handle_events():
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             if pygame.mouse.get_pressed()[0]:
-                game
+                game.check_clicks()
 
 
 def draw():

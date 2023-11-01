@@ -3,6 +3,7 @@
 """
 import pygame
 from base_classes import Button, Menu
+from typing import Any
 
 
 class LevelsButton(Button):
@@ -21,6 +22,9 @@ class LevelsButton(Button):
 
         super().__init__(parent, xy, size, text, text_size, text_color) # initializes the button class(gets the attributes it has)
 
+    def action(self):
+        self.parent.change_state("levels")
+
 
 class PlayButton(Button):
     def __init__(self,
@@ -38,19 +42,27 @@ class PlayButton(Button):
 
         super().__init__(parent, xy, size, text, text_size, text_color) # initializes the button class(gets the attributes it has)
 
+    def action(self):
+        self.parent.change_state("game")
+
 
 class MainMenu(Menu):
     def __init__(self,
                  window: pygame.Surface,
-                 button_size: tuple[int, int] | list[int, int] = [200, 50]
+                 game: Any,
+                 button_size: tuple[int, int] | list[int, int] = [200, 50],
                  ):
         self.button_size = button_size
 
-        super().__init__(window)
+        super().__init__(window, game)
 
         self.arrange()
 
-    def arrange(self):
+    def arrange(self) -> None:
+        """
+            Centers the buttons.
+            :return: None
+        """
         buttons = [
             PlayButton,
             LevelsButton
@@ -66,6 +78,6 @@ class MainMenu(Menu):
             xy = [x, y]
             self.buttons.append(button(self, xy=xy))
 
-    def draw(self):
+    def draw(self) -> None:
         for button in self.buttons:
             button.draw()
