@@ -1,5 +1,7 @@
 import pygame
+import base_classes
 
+base_classes.hello_world()
 
 WIDTH, HEIGHT = 600, 600
 
