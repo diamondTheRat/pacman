@@ -7,6 +7,7 @@ from typing import Any
 from level_selection import BackToMenu
 from minimap import MiniMap
 from side_bar_text_labels import LivesLabel
+from game_board import Board
 
 
 class GoToMenu(BackToMenu):
@@ -88,6 +89,10 @@ class Playing(Menu):
         # the frame that holds the stuff on the side
         side_bar = Frame(self, [self.window.get_width() - 200, 0], [200, self.window.get_height()], (70, 75, 85))
         self.frames.append(side_bar)
+
+        # the game board/map
+        board = Board(self)
+        self.frames.append(board)
 
         # level counter
         pos = [10, 10]
