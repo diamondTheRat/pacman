@@ -2,10 +2,11 @@
     The menu class is defined in here.
 """
 import pygame
-from base_classes import Button, Menu, Frame
+from base_classes import Button, Menu, Frame, TextLabel
 from typing import Any
 from level_selection import BackToMenu
 from minimap import MiniMap
+from side_bar_text_labels import LivesLabel
 
 
 class GoToMenu(BackToMenu):
@@ -71,14 +72,55 @@ class Playing(Menu):
 
         super().__init__(window, game)
         self.pause_menu = PauseMenu(self, window, game)
+
         self.state = "playing"
+
+        self.level = 1
+
+        self.lives = 3
+
+        self.score = 0
+
         self.arrange()
 
-    def arrange(self):
+
+    def arrange(self) -> None:
+        # the frame that holds the stuff on the side
         side_bar = Frame(self, [self.window.get_width() - 200, 0], [200, self.window.get_height()], (70, 75, 85))
         self.frames.append(side_bar)
+
+        # level counter
+        pos = [10, 10]
+        size = [180, 50]
+        level_label = TextLabel(side_bar, pos, size, text=f"level: {self.level}", text_size=32, color=[0, 0, 0, 0])
+
+        side_bar.add_child(level_label)
+
+        # score
+        pos = [10, 60]
+        size = [180, 50]
+        score_label = TextLabel(side_bar, pos, size, text=f"score: {self.score}", text_size=32, color=[0, 0, 0, 0])
+
+        side_bar.add_child(score_label)
+
+        # lives
+        pos = [10, 120]
+        size = [180, 50]
+        lives_label = LivesLabel(side_bar, pos, size, text=f"   x   {self.lives}", text_size=32, color=[0, 0, 0, 0])
+
+        side_bar.add_child(lives_label)
+
+        # minimap
+        grid = [
+            [0, 1, 1],
+            [0, 2, 0],
+            [0, 1, 1]
+        ]
+
         minimap = MiniMap(side_bar, [20, self.window.get_height() - 180], [160, 160], (60, 70, 80))
         side_bar.add_child(minimap)
+
+        minimap.set_map(grid)
 
 
     def pause(self):
@@ -100,6 +142,8 @@ class Playing(Menu):
         for button in self.buttons:
             button.draw()
 
+        for label in self.labels:
+            label.draw()
 
         if self.state == "paused":
             self.pause_menu.draw()
