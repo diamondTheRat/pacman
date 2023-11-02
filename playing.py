@@ -2,9 +2,10 @@
     The menu class is defined in here.
 """
 import pygame
-from base_classes import Button, Menu
+from base_classes import Button, Menu, Frame
 from typing import Any
 from level_selection import BackToMenu
+from minimap import MiniMap
 
 
 class GoToMenu(BackToMenu):
@@ -71,6 +72,14 @@ class Playing(Menu):
         super().__init__(window, game)
         self.pause_menu = PauseMenu(self, window, game)
         self.state = "playing"
+        self.arrange()
+
+    def arrange(self):
+        side_bar = Frame(self, [self.window.get_width() - 200, 0], [200, self.window.get_height()], (70, 75, 85))
+        self.frames.append(side_bar)
+        minimap = MiniMap(side_bar, [20, self.window.get_height() - 180], [160, 160], (60, 70, 80))
+        side_bar.add_child(minimap)
+
 
     def pause(self):
         if self.state == "paused":
@@ -85,5 +94,12 @@ class Playing(Menu):
 
 
     def draw(self) -> None:
+        for frame in self.frames:
+            frame.draw()
+
+        for button in self.buttons:
+            button.draw()
+
+
         if self.state == "paused":
             self.pause_menu.draw()
