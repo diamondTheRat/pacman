@@ -71,7 +71,6 @@ class Tile:
         self.rect = self.image.get_rect(topleft=(x, y))
     def draw(self):
         self.screen.blit(self.image, (self.x, self.y))    # here it blits all tiles
-        pass
 
 
 class StaticTile(Tile):
@@ -133,9 +132,9 @@ def split_layout_into_rooms(layout):
         rooms[f"room{room_nr + 1}"] = {}
         for layer in layers:
             room_info = []
-            for row in range(20*(room_nr % 3), 20*((room_nr % 3)+1)):
+            for row in range(20*(room_nr // 3), 20*((room_nr // 3)+1)):
                 room_info_row = []
-                for val in range(20):
+                for val in range(20*(room_nr % 3), 20*((room_nr % 3)+1)):
                     room_info_row.append(layout[layer][row][val])
                 room_info.append(room_info_row)
             rooms[f"room{room_nr + 1}"][layer] = room_info
@@ -143,7 +142,7 @@ def split_layout_into_rooms(layout):
 
 
 # Testing:
-level1_layout = load_map_layout("Levels", 1)
-all_rooms = split_layout_into_rooms(level1_layout)
-tiles_to_blit = find_tiles_to_blit(all_rooms, 1, pygame.Surface((500, 500)))  # WIN
-draw_tiles(tiles_to_blit)
+# level1_layout = load_map_layout("Levels", 1)
+# all_rooms = split_layout_into_rooms(level1_layout)
+# tiles_to_blit = find_tiles_to_blit(all_rooms, 1, pygame.Surface((500, 500)))
+# draw_tiles(tiles_to_blit)
