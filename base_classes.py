@@ -3,7 +3,7 @@
     By that I mean you use these as a foundation, then add onto them to make new classes.
 """
 import pygame
-from typing import Any
+from typing import Any, Literal
 
 
 pygame.font.init()
@@ -16,7 +16,8 @@ class Button:
                  size: tuple[float, float] | list[float, float],
                  text: str = "",
                  text_size: int = 16,
-                 text_color: tuple[int, int, int] | list[int, int, int] = (255, 255, 255)
+                 text_color: tuple[int, int, int] | list[int, int, int] = (255, 255, 255),
+                 color: tuple[int, int, int] | list[int, int, int] = (0, 0, 0)
                  ):
         """
             A text button.
@@ -79,9 +80,12 @@ class Button:
             Renders the button on the window.
             :return: None
         """
-
-        self.parent.window.blit(self.surface, self.rect)
-
+        if isinstance(self.parent, Frame):
+            self.parent.Surface.blit(self.surface, self.rect)
+        elif isinstance(self.parent, Menu):
+            self.parent.window.blit(self.surface, self.rect)
+        else:
+            raise ValueError("Bro who's my parent ._.")
 
 
 class Menu:
@@ -100,6 +104,8 @@ class Menu:
         self.buttons = []
 
         self.frames = []
+
+        self.labels = []
 
     def check_for_clicks(self) -> None:
         """
@@ -186,3 +192,69 @@ class Frame:
             self.parent.Surface.blit(self.Surface, self.rect)
         elif isinstance(self.parent, Menu):
             self.parent.window.blit(self.Surface, self.rect)
+
+
+class TextLabel:
+    def __init__(self,
+                 parent: Any,
+                 xy: tuple[float, float] | list[float, float],
+                 size: tuple[float, float] | list[float, float],
+                 text: str = "",
+                 text_size: int = 16,
+                 text_color: tuple[int, int, int] | list[int, int, int] = (255, 255, 255),
+                 color: tuple[int, int, int] | list[int, int, int] = (0, 0, 0),
+                 side: Literal["left", "center", "right"] = "center"
+                 ):
+        """
+            A text label.
+            :param parent: the menu that holds the label.
+            :param xy: the position of the label.
+            :param size: the size of the label.
+            :param text: (optional) the text displayed on the label.
+            :param text_size: (optional) the size of the text.
+            :param text_color: (optional) the color of the text.
+        """
+        self.parent = parent
+
+        self.color = color
+
+        self.text = text
+        self.font_size = text_size
+        self.text_color = text_color
+
+        self.pos = xy
+        self.size = size
+
+        self.x, self.y = xy
+        self.width, self.height = size
+
+        self.surface = pygame.Surface(size, flags=pygame.SRCALPHA)
+        self.rect = self.surface.get_rect(topleft=xy)
+
+        self.generate_text()
+
+    def generate_text(self) -> None:
+        """
+            Puts the text on the label.
+            Runs when the class is created.
+            :return: None
+        """
+        self.surface.fill(self.color)
+
+        font = pygame.font.SysFont("arial", self.font_size)
+        text = font.render(self.text, 1, self.text_color)
+
+        self.surface.blit(text, text.get_rect(center=(self.width // 2, self.height // 2)))
+
+    def draw(self) -> None:
+        """
+            Renders the text label on the parent surface.
+            :return: None
+        """
+        if isinstance(self.parent, Frame):
+            self.parent.Surface.blit(self.surface, self.rect)
+        elif isinstance(self.parent, Menu):
+            self.parent.window.blit(self.surface, self.rect)
+        else:
+            raise ValueError("Bro who's my parent ._.")
+
