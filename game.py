@@ -50,7 +50,8 @@ class Game:
                 self.already_pressed.remove(pygame.K_ESCAPE)
 
     def run_level(self, level):
-        print("\033[93mnu merge inca bc no levels\033[0m < probabil linia 27, game.py")
+        print("\033[93mnu merge inca bc no levels\033[0m < probabil linia 53, game.py")
+
 
 
     def check_clicks(self):
