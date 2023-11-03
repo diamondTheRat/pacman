@@ -14,23 +14,24 @@ class Board(Frame):
 
         self.Surface = pygame.Surface(size, flags=pygame.SRCALPHA)
 
-        self.load_level(2)
-
     def load_level(self, level):
         level_layout = load_map_layout("Levels", level)
         self.rooms = split_layout_into_rooms(level_layout)
 
-        self.room = self.find_starting_room()   
+        self.room = self.find_starting_room()
 
-        self.tiles = find_tiles_to_blit(self.rooms, 2, self.Surface)
+        self.tiles = find_tiles_to_blit(self.rooms, self.find_starting_room(), self.Surface)
+        self.Surface.fill((0, 0, 0, 0))
         draw_tiles(self.tiles)
 
     def find_starting_room(self):
         for room, tiles in self.rooms.items():
-            for row in tiles["pacman spawn"]:
-                for tile in row:
+            for y, row in enumerate(tiles["pacman spawn"]):
+                for x, tile in enumerate(row):
                     if tile == '0':
-                        print(f"starting in {room}")
+                        self.start_room = int(room[-1])
+                        self.start_tile = [x, y]
+        return self.start_room
 
     def draw(self):
         self.parent.window.blit(self.Surface, self.pos)

@@ -50,13 +50,17 @@ class Game:
                 self.already_pressed.remove(pygame.K_ESCAPE)
 
     def run_level(self, level):
+        try:
+            self.states["playing"].frames[1].load_level(level)
+        except KeyError:
+            print("\033[93mnu merge inca bc this level wasnt added\033[0m < probabil linia 53, game.py")
+            return
         self.state = "playing"
         self.current_state = self.states[self.state]
         self.current_state.level = level
         text_label = self.current_state.frames[0].children[0]
         text_label.text = f"level: {level}"
         text_label.generate_text()
-        # print("\033[93mnu merge inca bc no levels\033[0m < probabil linia 53, game.py")
 
 
 

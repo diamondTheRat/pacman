@@ -44,7 +44,7 @@ class PlayButton(Button):
 
     def action(self):
         self.parent.change_state("playing")
-
+        self.parent.game.run_level(self.parent.game.states["playing"].level)
 
 class MainMenu(Menu):
     def __init__(self,
