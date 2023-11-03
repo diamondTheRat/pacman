@@ -26,7 +26,7 @@ class LivesLabel(TextLabel):
             :param text_color: (optional) the color of the text.
         """
 
-        self.image = pygame.image.load("./pacman/moving_mouth/0.png")
+        self.image = pygame.image.load("./animations/pacman animation/pacman_1.png")
         self.image = pygame.transform.scale(self.image, (40, 40))
 
         super().__init__(parent, xy, size, text, text_size, text_color, color, side)
