@@ -92,7 +92,6 @@ class Entity:
         """
         if not auto:
             self.move_queue = (horizontally, vertically)
-            print("moved")
 
         if not tuple(self.rect.topleft) == tuple(self.target): return # if it didn't finish moving it won't change direction
         x, y = self.rect.topleft
