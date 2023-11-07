@@ -50,7 +50,7 @@ class LivesLabel(TextLabel):
 
         self.add_image()
 
-        font = pygame.font.SysFont("arial", self.font_size)
+        font = pygame.font.Font("Pixel Font.ttf", self.font_size)
         text = font.render(self.text, 1, self.text_color)
         # x_text = font.render("x", 1, self.text_color)
 

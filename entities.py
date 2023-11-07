@@ -79,6 +79,7 @@ class Entity:
 
     def stop_moving(self):
         self.move_vector = (0, 0)
+        self.move_queue = (0, 0)
 
     def collides(self, position: tuple[int, int]):
         x, y = position
@@ -88,7 +89,7 @@ class Entity:
 
     def move(self, horizontally: int, vertically: int, auto: bool=False):
         """
-        :param auto: if u tell it to move leave this off, if it's in the udpate function leave it on
+        :param auto: if u tell it to move leave this off, if it's in the update function leave it on
         """
         if not auto:
             self.move_queue = (horizontally, vertically)
