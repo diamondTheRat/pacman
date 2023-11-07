@@ -33,7 +33,3 @@ class Pacman(Entity):
         self.base_frames = self.frames
 
         self.frame = self.frames[0]
-
-    def draw(self):
-        self.parent.parent.window.blit(self.frame, self.rect)
-        self.update_anim()
