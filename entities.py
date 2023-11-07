@@ -2,6 +2,8 @@ import pygame
 from base_classes import Menu, Frame
 
 
+rotation_function = lambda r: r[1] * -90 + (r[0] - 1) // 2 * 180
+
 class Entity:
     def __init__(self,
                  parent: Menu | Frame,
@@ -27,6 +29,8 @@ class Entity:
 
         self.speed = speed
 
+        self.base_frames = []
+
         self.frames = []
         self.frame_index = 0
         self.frame = None
@@ -34,6 +38,7 @@ class Entity:
 
         self.start_pos = self.target = self.rect.topleft # the position it starts at and the position it's moving to
         self.move_vector = [0, 0]
+        self.previous_move_vector = [0, 0]
 
         self.steps = 0
 
@@ -43,7 +48,25 @@ class Entity:
     def load_anim(self):
         pass
 
+    def rotate_frames(self):
+        if self.move_vector == [0, 0]: return # pacman stopped moving
+
+        new_frames = []
+        for frame in self.base_frames:
+            new_frame = pygame.transform.rotate(frame, rotation_function(self.move_vector))
+            if self.move_vector == [-1, 0]:
+                new_frame = pygame.transform.flip(new_frame, flip_y=True)
+            new_frames.append(new_frame)
+
+        self.frames = new_frames
+
+
     def update_anim(self):
+        if not self.move_vector == self.previous_move_vector:
+            self.rotate_frames()
+
+        self.previous_move_vector = self.move_vector
+
         self.frame_index += self.frame_rate
 
         if self.frame_index >= len(self.frames) or self.frame_index <= 0:
@@ -55,13 +78,13 @@ class Entity:
     def stop_moving(self):
         self.move_vector = (0, 0)
 
-    def move(self, vertically: bool, horizontally: bool):
-        self.move_vector = (vertically, horizontally)
+    def move(self, horizontally: int, vertically: int):
+        self.move_vector = (horizontally, vertically)
         if not self.rect.topleft == self.target: return # if it didn't finish moving it won't change direction
         x, y = self.rect.topleft
 
         self.start_pos = [x, y]
-        self.target = (x - self.height * horizontally, y + self.height * vertically)
+        self.target = (x + self.height * horizontally, y + self.height * vertically)
 
         self.steps = self.speed
 

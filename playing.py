@@ -8,6 +8,7 @@ from level_selection import BackToMenu
 from minimap import MiniMap
 from side_bar_text_labels import LivesLabel
 from game_board import Board
+from pacman import Pacman
 
 
 class GoToMenu(BackToMenu):
@@ -87,7 +88,9 @@ class Playing(Menu):
 
 
     def load_entities(self):
-        self.frames[1].load_entities()
+        self.entities = []
+        pacman = Pacman(self.frames[1], 40, self.frames[1].start_tile, 15)
+        self.entities.append(pacman)
 
 
     def arrange(self) -> None:
@@ -153,7 +156,7 @@ class Playing(Menu):
     def draw(self) -> None:
         self.update()
 
-        for child in self.frames + self.buttons + self.labels:
+        for child in self.frames + self.buttons + self.labels + self.entities:
             child.draw()
 
         if self.state == "paused":

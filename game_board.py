@@ -1,5 +1,5 @@
 import pygame
-from pacman import Pacman
+
 from base_classes import Frame, Menu
 from load_map import *
 
@@ -24,12 +24,6 @@ class Board(Frame):
         self.Surface.fill((0, 0, 0, 0))
         draw_tiles(self.tiles)
 
-    def load_entities(self):
-        self.entities = []
-        pacman = Pacman(self, 40, self.start_tile, 15)
-        self.entities.append(pacman)
-        self.add_child(pacman)
-
     def find_starting_room(self):
         for room, tiles in self.rooms.items():
             for y, row in enumerate(tiles["pacman spawn"]):
@@ -40,8 +34,4 @@ class Board(Frame):
         return self.start_room
 
     def draw(self):
-        self.Surface.fill((0, 0, 0, 0))
-        draw_tiles(self.tiles)
-        for child in self.children:
-            child.draw()
         self.parent.window.blit(self.Surface, self.pos)

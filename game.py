@@ -7,8 +7,6 @@ from level_selection import LevelSelectionMenu
 from playing import Playing
 
 
-
-
 class Game:
     def __init__(self, window: pygame.Surface):
         """
@@ -27,8 +25,6 @@ class Game:
         }
 
         self.current_state = self.states[self.state]
-
-
 
     def draw(self) -> None:
         """
@@ -54,21 +50,20 @@ class Game:
                 self.already_pressed.remove(pygame.K_ESCAPE)
 
         if not self.current_state.state == "paused":
-            pacman = self.states["playing"].frames[1].entities[0]
             if keys[pygame.K_LCTRL]:
-                pacman.stop_moving()
-
-            if keys[pygame.K_a]:
-                pacman.move(0, 1) # moves 0 tiles vertically and 1 tile horizontally
-
-            if keys[pygame.K_d]:
-                pacman.move(0, -1) # moves 0 tiles vertically and -1 tile horizontally
-
-            if keys[pygame.K_w]:
-                pacman.move(-1, 0) # moves -1 tiles vertically and 0 tile horizontally
+                self.current_state.entities[0].stop_moving()
 
             if keys[pygame.K_s]:
-                pacman.move(1, 0) # moves 1 tiles vertically and 0 tile horizontally
+                self.current_state.entities[0].move(0, 1) # moves 0 tiles vertically and 1 tile vertically
+
+            if keys[pygame.K_w]:
+                self.current_state.entities[0].move(0, -1) # moves 0 tiles vertically and -1 tile vertically
+
+            if keys[pygame.K_a]:
+                self.current_state.entities[0].move(-1, 0) # moves -1 tiles vertically and 0 tile horizontally
+
+            if keys[pygame.K_d]:
+                self.current_state.entities[0].move(1, 0) # moves 1 tiles vertically and 0 tile horizontally
 
 
     def run_level(self, level):
