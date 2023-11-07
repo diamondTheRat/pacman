@@ -58,7 +58,6 @@ class Entity:
     def move(self, vertically: bool, horizontally: bool):
         self.move_vector = (vertically, horizontally)
         if not self.rect.topleft == self.target: return # if it didn't finish moving it won't change direction
-
         x, y = self.rect.topleft
 
         self.start_pos = [x, y]
