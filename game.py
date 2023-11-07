@@ -49,6 +49,23 @@ class Game:
             if pygame.K_ESCAPE in self.already_pressed:
                 self.already_pressed.remove(pygame.K_ESCAPE)
 
+        if not self.current_state.state == "paused":
+            if keys[pygame.K_LCTRL]:
+                self.current_state.entities[0].stop_moving()
+
+            if keys[pygame.K_a]:
+                self.current_state.entities[0].move(0, 1) # moves 0 tiles vertically and 1 tile horizontally
+
+            if keys[pygame.K_d]:
+                self.current_state.entities[0].move(0, -1) # moves 0 tiles vertically and -1 tile horizontally
+
+            if keys[pygame.K_w]:
+                self.current_state.entities[0].move(-1, 0) # moves -1 tiles vertically and 0 tile horizontally
+
+            if keys[pygame.K_s]:
+                self.current_state.entities[0].move(1, 0) # moves 1 tiles vertically and 0 tile horizontally
+
+
     def run_level(self, level):
         try:
             self.states["playing"].frames[1].load_level(level)
@@ -58,6 +75,8 @@ class Game:
         self.state = "playing"
         self.current_state = self.states[self.state]
         self.current_state.level = level
+        self.current_state.load_entities()
+
         text_label = self.current_state.frames[0].children[0]
         text_label.text = f"level: {level}"
         text_label.generate_text()

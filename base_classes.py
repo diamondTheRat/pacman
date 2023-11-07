@@ -70,7 +70,7 @@ class Button:
             Runs when the class is created.
             :return: None
         """
-        font = pygame.font.SysFont("arial", self.font_size)
+        font = pygame.font.Font("Pixel Font.ttf", self.font_size)
         text = font.render(self.text, 0, self.text_color)
 
         self.surface.blit(text, text.get_rect(center=(self.width // 2, self.height // 2)))
@@ -241,7 +241,7 @@ class TextLabel:
         """
         self.surface.fill(self.color)
 
-        font = pygame.font.SysFont("arial", self.font_size)
+        font = pygame.font.Font("Pixel Font.ttf", self.font_size)
         text = font.render(self.text, 1, self.text_color)
 
         self.surface.blit(text, text.get_rect(center=(self.width // 2, self.height // 2)))

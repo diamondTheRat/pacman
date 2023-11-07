@@ -8,10 +8,13 @@ from level_selection import BackToMenu
 from minimap import MiniMap
 from side_bar_text_labels import LivesLabel
 from game_board import Board
+from pacman import Pacman
 
 
 class GoToMenu(BackToMenu):
     def click(self, pos: tuple[int, int] | list[int, int]):
+        if not self.parent.parent.state == "paused": return # makes it so u can click it only when the game is paused
+
         if self.rect.collidepoint(pos):
             self.action()
             self.parent.parent.state = "playing"
@@ -73,16 +76,21 @@ class Playing(Menu):
 
         super().__init__(window, game)
         self.pause_menu = PauseMenu(self, window, game)
-
         self.state = "playing"
 
         self.level = 1
-
         self.lives = 3
-
         self.score = 0
 
+        self.entities = []
+
         self.arrange()
+
+
+    def load_entities(self):
+        self.entities = []
+        pacman = Pacman(self, 40, self.frames[1].start_tile, 15)
+        self.entities.append(pacman)
 
 
     def arrange(self) -> None:
@@ -139,16 +147,17 @@ class Playing(Menu):
 
         self.pause_menu.check_for_clicks()
 
+    def update(self):
+        if self.state == "paused": return
+
+        for entity in self.entities:
+            entity.update()
 
     def draw(self) -> None:
-        for frame in self.frames:
-            frame.draw()
+        self.update()
 
-        for button in self.buttons:
-            button.draw()
-
-        for label in self.labels:
-            label.draw()
+        for child in self.frames + self.buttons + self.labels + self.entities:
+            child.draw()
 
         if self.state == "paused":
             self.pause_menu.draw()
