@@ -53,16 +53,16 @@ class Game:
             if keys[pygame.K_LCTRL]:
                 self.current_state.entities[0].stop_moving()
 
-            if keys[pygame.K_a]:
-                self.current_state.entities[0].move(0, 1) # moves 0 tiles vertically and 1 tile horizontally
-
-            if keys[pygame.K_d]:
-                self.current_state.entities[0].move(0, -1) # moves 0 tiles vertically and -1 tile horizontally
+            if keys[pygame.K_s]:
+                self.current_state.entities[0].move(0, 1) # moves 0 tiles vertically and 1 tile vertically
 
             if keys[pygame.K_w]:
+                self.current_state.entities[0].move(0, -1) # moves 0 tiles vertically and -1 tile vertically
+
+            if keys[pygame.K_a]:
                 self.current_state.entities[0].move(-1, 0) # moves -1 tiles vertically and 0 tile horizontally
 
-            if keys[pygame.K_s]:
+            if keys[pygame.K_d]:
                 self.current_state.entities[0].move(1, 0) # moves 1 tiles vertically and 0 tile horizontally
 
 

@@ -18,9 +18,9 @@ class Board(Frame):
         level_layout = load_map_layout("Levels", level)
         self.rooms = split_layout_into_rooms(level_layout)
 
-        self.room = self.find_starting_room()
+        self.room = self.rooms[f"room{self.find_starting_room()}"]
 
-        self.tiles = find_tiles_to_blit(self.rooms, self.find_starting_room(), self.Surface)
+        self.tiles = find_tiles_to_blit(self.rooms, self.start_room, self.Surface)
         self.Surface.fill((0, 0, 0, 0))
         draw_tiles(self.tiles)
 

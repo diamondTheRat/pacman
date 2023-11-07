@@ -89,7 +89,7 @@ class Playing(Menu):
 
     def load_entities(self):
         self.entities = []
-        pacman = Pacman(self, 40, self.frames[1].start_tile, 15)
+        pacman = Pacman(self.frames[1], 40, self.frames[1].start_tile, 15)
         self.entities.append(pacman)
 
 

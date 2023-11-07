@@ -30,4 +30,6 @@ class Pacman(Entity):
             image = pygame.image.load(fr"{path}\pacman_{frame}.png")
             self.frames.append(image)
 
+        self.base_frames = self.frames
+
         self.frame = self.frames[0]
