@@ -132,6 +132,7 @@ class Playing(Menu):
 
         minimap = MiniMap(side_bar, [20, self.window.get_height() - 180], [160, 160], (60, 70, 80))
         side_bar.add_child(minimap)
+        self.minimap = minimap
 
         minimap.set_map(grid)
 
@@ -156,7 +157,7 @@ class Playing(Menu):
     def draw(self) -> None:
         self.update()
 
-        for child in self.frames + self.buttons + self.labels + self.entities:
+        for child in self.frames + self.buttons + self.labels:
             child.draw()
 
         if self.state == "paused":

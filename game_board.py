@@ -13,6 +13,9 @@ class Board(Frame):
         super().__init__(parent, xy, size, (0, 0, 0, 0))
 
         self.Surface = pygame.Surface(size, flags=pygame.SRCALPHA)
+        self.map = pygame.Surface(size, flags=pygame.SRCALPHA)
+
+        self.room_index = 0
 
     def load_level(self, level):
         level_layout = load_map_layout("Levels", level)
@@ -20,9 +23,35 @@ class Board(Frame):
 
         self.room = self.rooms[f"room{self.find_starting_room()}"]
 
-        self.tiles = find_tiles_to_blit(self.rooms, self.start_room, self.Surface)
-        self.Surface.fill((0, 0, 0, 0))
+        self.tiles = find_tiles_to_blit(self.rooms, self.start_room, self.map)
+        self.map.fill((0, 0, 0, 0))
         draw_tiles(self.tiles)
+
+        self.room_index = self.start_room
+
+        self.grid = get_empty_rooms(self.rooms, self.start_room)
+        self.parent.minimap.arrange(self.grid) # updates the minimap
+
+    def change_room(self, x_change, y_change):
+        index = self.room_index - 1
+        x, y = index % 3, index // 3
+        x += x_change
+        y += y_change
+        room = x + y * 3 + 1
+        self.room_index = room
+
+        self.load_room(room)
+
+    def load_room(self, room):
+        self.room = self.rooms[f"room{room}"]
+
+        self.tiles = find_tiles_to_blit(self.rooms, room, self.map)
+        self.map.fill((0, 0, 0, 0))
+        draw_tiles(self.tiles)
+
+        self.grid = get_empty_rooms(self.rooms, room)
+        self.parent.minimap.arrange(self.grid)  # updates the minimap
+
 
     def find_starting_room(self):
         for room, tiles in self.rooms.items():
@@ -34,4 +63,8 @@ class Board(Frame):
         return self.start_room
 
     def draw(self):
+        self.Surface.fill((0, 0, 0, 0))
+        self.Surface.blit(self.map, (0, 0))
+        for entity in self.parent.entities:
+            entity.draw(self.Surface)
         self.parent.window.blit(self.Surface, self.pos)

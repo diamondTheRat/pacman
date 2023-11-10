@@ -1,7 +1,6 @@
 import pygame
 from base_classes import Menu, Frame
 
-
 rotation_function = lambda r: r[1] * 90 + (r[0] - 1) // 2 * 180
 
 class Entity:
@@ -64,6 +63,9 @@ class Entity:
 
 
     def update_anim(self):
+        if hasattr(self.parent.parent, "state"):
+            if self.parent.parent.state == "paused": return
+
         if not self.move_vector == self.previous_move_vector:
             self.rotate_frames()
 
@@ -83,6 +85,10 @@ class Entity:
 
     def collides(self, position: tuple[int, int]):
         x, y = position
+        if y < 0 or x < 0:
+            return False
+        if x == 20 or y == 20:
+            return False
         if self.parent.room["walls"][y][x] == "0":
             return True
         return False
@@ -98,29 +104,29 @@ class Entity:
         x, y = self.rect.topleft
 
         self.start_pos = [x, y]
-        pos = [x // self.width + self.move_queue[0], y // self.height + self.move_queue[1]]
+        pos = [x // self.width + self.move_queue[0], y // self.height + self.move_queue[1]] # checks if it can change direction
 
         if not self.collides(pos):
             self.move_vector = self.move_queue
         else:
             self.move_vector = (horizontally, vertically)
 
+        pos = [x // self.width + self.move_vector[0], y // self.height + self.move_vector[1]]
+
+        if self.collides(pos):
+            return
+
         self.target = (x + self.height * self.move_vector[0], y + self.height * self.move_vector[1])
         self.steps = self.speed
+
+    def out_of_bounds(self):
+        pass
 
     def update(self):
         if not self.steps: return
 
         x1, y1 = self.start_pos
         x2, y2 = self.target
-
-        wx, wy = x2 // self.width, y2 // self.height
-        if self.collides([wx, wy]):
-            self.move_vector = self.move_queue
-            self.target = self.start_pos
-            self.move_vector = (0, 0)
-            self.steps = 0
-            return
 
         move_percent = 1 - self.steps / self.speed
         self.rect.topleft = [x1 + (x2 - x1) * move_percent, y1 + (y2 - y1) * move_percent]
@@ -129,11 +135,12 @@ class Entity:
 
         if not self.steps:
             self.rect.topleft = self.target
+            self.out_of_bounds()
             x, y = self.move_vector
             self.move(x, y, True)
 
-    def draw(self):
+    def draw(self, surface):
         if self.frame is not None:
-            self.parent.parent.window.blit(self.frame, self.rect)
+            surface.blit(self.frame, self.rect)
 
         self.update_anim()

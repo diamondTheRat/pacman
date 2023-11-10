@@ -22,6 +22,25 @@ class Pacman(Entity):
         super().__init__(parent, tile_size, xy, speed, frames)
 
 
+    def out_of_bounds(self):
+        change = False
+        if self.rect.top < 0:
+            self.rect.top = self.height * 20 - 40
+            change = (0, -1)
+        elif self.rect.top >= self.height * 20:
+            self.rect.top = 0
+            change = (0, 1)
+        elif self.rect.left < 0:
+            self.rect.left = self.height * 20 - 40
+            change = (-1, 0)
+        elif self.rect.left >= self.width * 20:
+            self.rect.left = 0
+            change = (1, 0)
+
+        if change:
+            self.target = self.rect.topleft
+            x, y = change
+            self.parent.change_room(x, y)
 
     def load_anim(self):
         path = fr".\animations\pacman animation"

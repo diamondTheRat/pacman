@@ -3,7 +3,7 @@
  <tileset firstgid="1" source="../tilesets/wall.tsx"/>
  <tileset firstgid="2" source="../tilesets/pacman spawn.tsx"/>
  <tileset firstgid="3" source="../tilesets/dots.tsx"/>
- <layer id="1" name="wall" width="60" height="60">
+ <layer id="1" name="walls" width="60" height="60">
   <data encoding="csv">
 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,

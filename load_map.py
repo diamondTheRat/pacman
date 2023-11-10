@@ -141,6 +141,31 @@ def split_layout_into_rooms(layout):
     return rooms
 
 
+def get_empty_rooms(rooms: dict, start_room: int) -> list[list[int]]:
+    grid = [
+        [0, 0, 0],
+        [0, 0, 0],
+        [0, 0, 0]
+    ]
+    for room, tiles in rooms.items():
+        room_index = int(room[-1]) - 1
+        x, y = room_index % 3, room_index // 3
+
+        if room_index + 1 == start_room:
+            grid[y][x] = 2
+            continue
+
+        walls = tiles["walls"]
+        if not (walls[0] == walls[-1] and walls[0] == ["0"] * 20):
+            grid[y][x] = 1
+            continue
+
+        for row in walls:
+            if not (row[0] == row[-1] and row[0] == "0"):
+                grid[y][x] = 1
+                break
+
+    return grid
 # Testing:
 # level1_layout = load_map_layout("Levels", 1)
 # all_rooms = split_layout_into_rooms(level1_layout)
