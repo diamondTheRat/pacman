@@ -42,6 +42,21 @@ class Pacman(Entity):
             x, y = change
             self.parent.change_room(x, y)
 
+    def eat_balls(self):
+        if self.steps != self.speed and self.steps: return # this means it just started moving (its on a square on the grid)
+        balls = self.parent.room["dots"]
+        x, y = self.rect.topleft
+        x //= 40
+        y //= 40
+        if balls[y][x] == '0':
+            balls[y][x] = '-1'
+            pygame.draw.rect(self.parent.map, (0, 0, 0, 0), self.rect)
+            self.parent.parent.add_score()
+
+    def update(self):
+        super().update()
+        self.eat_balls()
+
     def load_anim(self):
         path = fr".\animations\pacman animation"
         frames = 4

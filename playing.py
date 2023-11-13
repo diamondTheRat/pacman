@@ -112,7 +112,7 @@ class Playing(Menu):
         # score
         pos = [10, 60]
         size = [180, 50]
-        score_label = TextLabel(side_bar, pos, size, text=f"score: {self.score}", text_size=32, color=[0, 0, 0, 0])
+        self.score_label = score_label = TextLabel(side_bar, pos, size, text=f"score: {self.score}", text_size=32, color=[0, 0, 0, 0])
 
         side_bar.add_child(score_label)
 
@@ -153,6 +153,17 @@ class Playing(Menu):
 
         for entity in self.entities:
             entity.update()
+
+    def add_score(self, score: int = 1) -> None:
+        """
+        Raises the score
+        :param score:
+        :return:
+        """
+        self.score += score
+        self.score_label.text = f"score: {self.score}"
+        self.score_label.generate_text()
+        pass
 
     def draw(self) -> None:
         self.update()

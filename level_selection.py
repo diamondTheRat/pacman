@@ -24,6 +24,10 @@ class LevelButton(Button):
             This just runs the level.
             :return: None
         """
+        playing_menu = self.parent.game.states["playing"]
+        playing_menu.score = 0
+        playing_menu.arrange
+
         self.parent.game.run_level(self.level)
 
 
