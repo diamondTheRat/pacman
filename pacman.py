@@ -43,7 +43,7 @@ class Pacman(Entity):
             self.parent.change_room(x, y)
 
     def eat_balls(self):
-        if self.steps != self.speed and self.steps: return # this means it just started moving (its on a square on the grid)
+        if self.steps != self.speed and self.steps: return # this means it just started moving or stopped moving (its on a square on the grid)
         balls = self.parent.room["dots"]
         x, y = self.rect.topleft
         x //= 40
