@@ -16,7 +16,7 @@ class LevelsButton(Button):
                  text_color: tuple[int, int, int] | list[int, int, int] = (255, 255, 255)
                  ):
         """
-            The play button.
+            The levels button.
             :param parent: the menu that it's in.
         """
 
@@ -24,6 +24,25 @@ class LevelsButton(Button):
 
     def action(self):
         self.parent.change_state("levels")
+
+class SettingsButton(Button):
+    def __init__(self,
+                 parent: Menu,
+                 xy: tuple[float, float] | list[float, float] = None,
+                 size: tuple[float, float] | list[float, float] = [200, 50],
+                 text: str = "Settings",
+                 text_size: int = 16,
+                 text_color: tuple[int, int, int] | list[int, int, int] = (255, 255, 255)
+                 ):
+        """
+            The settings button.
+            :param parent: the menu that it's in.
+        """
+
+        super().__init__(parent, xy, size, text, text_size, text_color) # initializes the button class(gets the attributes it has)
+
+    def action(self):
+        self.parent.change_state("settings")
 
 
 class PlayButton(Button):
@@ -65,7 +84,8 @@ class MainMenu(Menu):
         """
         buttons = [
             PlayButton,
-            LevelsButton
+            LevelsButton,
+            SettingsButton
         ]
 
         width, height = self.button_size

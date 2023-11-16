@@ -3,7 +3,8 @@ from game import Game
 
 WIDTH, HEIGHT = 1000, 800
 
-WIN = pygame.display.set_mode((WIDTH, HEIGHT), flags=pygame.RESIZABLE)
+WIN = pygame.display.set_mode((WIDTH, HEIGHT), flags=pygame.SCALED)
+
 
 game = Game(WIN)
 

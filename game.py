@@ -5,6 +5,7 @@ import pygame
 from main_menu import MainMenu
 from level_selection import LevelSelectionMenu
 from playing import Playing
+from settings_menu import Settings
 
 
 class Game:
@@ -21,7 +22,8 @@ class Game:
         self.states = {
             "menu": MainMenu(window, self),
             "levels": LevelSelectionMenu(window, self),
-            "playing": Playing(window, self)
+            "playing": Playing(window, self),
+            "settings": Settings(window, self)
         }
 
         self.current_state = self.states[self.state]
