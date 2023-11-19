@@ -99,7 +99,7 @@ class Playing(Menu):
         self.frames.append(side_bar)
 
         # the game board/map
-        board = Board(self)
+        board  = self.board = Board(self)
         self.frames.append(board)
 
         # level counter
@@ -119,9 +119,19 @@ class Playing(Menu):
         # lives
         pos = [10, 120]
         size = [180, 50]
-        lives_label = LivesLabel(side_bar, pos, size, text=f"   x   {self.lives}", text_size=32, color=[0, 0, 0, 0])
+        lives_label = LivesLabel(side_bar, pos, size, text=f" x {self.lives}", text_size=32, color=[0, 0, 0, 0])
 
         side_bar.add_child(lives_label)
+
+        # dots left
+        pos = [10, 180]
+        size = [180, 50]
+        dots_label = TextLabel(side_bar, pos, size, text=f"dots left: {self.board.dot_count}", color=[0, 0, 0, 0], text_size=25)
+
+        side_bar.add_child(dots_label)
+
+        self.dots_label = dots_label
+
 
         # minimap
         grid = [
@@ -154,6 +164,18 @@ class Playing(Menu):
         for entity in self.entities:
             entity.update()
 
+    def reset_score(self) -> None:
+        """
+        Resets the score
+        :return: None
+        """
+        self.score = 0
+        self.score_label.text = "score: 0"
+        self.score_label.generate_text()
+
+        self.dots_label.text = f"dots left: {self.board.dot_count}"
+        self.dots_label.generate_text()
+
     def add_score(self, score: int = 1) -> None:
         """
         Raises the score
@@ -163,7 +185,13 @@ class Playing(Menu):
         self.score += score
         self.score_label.text = f"score: {self.score}"
         self.score_label.generate_text()
-        pass
+
+        self.board.dots_left = self.board.dot_count - self.score
+
+        if self.board.dots_left == 0:
+            self.game.run_level(self.level + 1)
+        self.dots_label.text = f"dots left: {self.board.dots_left}"
+        self.dots_label.generate_text()
 
     def draw(self) -> None:
         self.update()

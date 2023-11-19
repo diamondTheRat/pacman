@@ -4,6 +4,7 @@
 import pygame
 from base_classes import Button, Menu
 from typing import Any
+from title import Title
 
 
 class LevelsButton(Button):
@@ -90,14 +91,23 @@ class MainMenu(Menu):
 
         width, height = self.button_size
 
+        self.title = Title(self)
+
+
         window_width, window_height = self.window.get_size()
+
+        offset = self.title.y + self.title.height
+        offset /= 2 # makes the buttons go higher
+        window_height -= offset
 
         button_count = len(buttons)
         for i, button in enumerate(buttons):
             x, y = window_width // 2 - width // 2, window_height // 2 - ((5 + height) * button_count - 5) / 2 + (5 + height) * i
-            xy = [x, y]
+            xy = [x, y + offset]
             self.buttons.append(button(self, xy=xy))
 
+
     def draw(self) -> None:
+        self.title.draw()
         for button in self.buttons:
             button.draw()

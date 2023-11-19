@@ -15,11 +15,17 @@ class Board(Frame):
         self.Surface = pygame.Surface(size, flags=pygame.SRCALPHA)
         self.map = pygame.Surface(size, flags=pygame.SRCALPHA)
 
+        self.dots_left = self.dot_count = 0
+
         self.room_index = 0
 
     def load_level(self, level):
+        self.parent.score = 0
+        self.parent.reset_score()
+
         level_layout = load_map_layout("Levels", level)
         self.rooms = split_layout_into_rooms(level_layout)
+        self.count_dots()
 
         self.room = self.rooms[f"room{self.find_starting_room()}"]
 
@@ -31,6 +37,17 @@ class Board(Frame):
 
         self.grid = get_empty_rooms(self.rooms, self.start_room)
         self.parent.minimap.arrange(self.grid) # updates the minimap
+
+
+    def count_dots(self) -> None:
+        """
+        Counts the number of dots in a level
+        :return:
+        """
+
+        self.dots_left = self.dot_count = sum(i == "0" for room in self.rooms.values() for row in room["dots"] for i in row)
+
+
 
     def change_room(self, x_change, y_change):
         index = self.room_index - 1

@@ -8,6 +8,14 @@ from playing import Playing
 from settings_menu import Settings
 
 
+# ignore this :3
+warning_line = 0
+with open("game.py", "r") as f:
+    content = f.readlines()
+    for index, line in enumerate(content, start=1):
+        if "nu merge" in line:
+            warning_line = index
+
 class Game:
     def __init__(self, window: pygame.Surface):
         """
@@ -72,7 +80,7 @@ class Game:
         try:
             self.states["playing"].frames[1].load_level(level)
         except KeyError:
-            print("\033[93mnu merge inca bc this level wasnt added\033[0m < probabil linia 53, game.py")
+            print(f"\033[93mnu merge inca bc this level wasnt added\033[0m < linia {warning_line}, game.py")
             return
         self.state = "playing"
         self.current_state = self.states[self.state]
@@ -82,6 +90,8 @@ class Game:
         text_label = self.current_state.frames[0].children[0]
         text_label.text = f"level: {level}"
         text_label.generate_text()
+
+        self.current_state.reset_score()
 
 
 

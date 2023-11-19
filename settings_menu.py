@@ -26,7 +26,7 @@ class FullScreenButton(Button):
     def action(self):
         if self.fullscreen:
             self.fullscreen = False
-            pygame.display.set_mode((1000, 800))
+            pygame.display.set_mode((1000, 800), flags=pygame.SCALED)
         else:
             self.fullscreen = True
             pygame.display.set_mode((1000, 800), flags=pygame.FULLSCREEN | pygame.SCALED)
